@@ -69,7 +69,7 @@ func Test_inventoryManager_UpdateQty(t *testing.T) {
 
 	t.Run("should not update qty if no product found", func(t *testing.T) {
 		inventoryManager.UpdateQty("xxxxxx", 2)
-		assert.Equal(t, 10, inventoryManager.inventories[0].Qty)
+		assert.Equal(t, 8, inventoryManager.inventories[0].Qty)
 		assert.Equal(t, 3, inventoryManager.inventories[1].Qty)
 	})
 }

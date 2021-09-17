@@ -18,6 +18,3 @@ func (o Order) GetPrice() float64 {
 type Cart struct {
 	Orders []Order
 }
-
-func (c *Cart) AddOrder(productName string) {
-}
