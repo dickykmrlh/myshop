@@ -19,6 +19,15 @@ type Cart struct {
 	DiscountCalculator DiscountCalculator
 }
 
+type PercentageDiscountCalculator struct {
+	DiscountPercentage float64
+	MinimumQuantity    int
+}
+
+func (p PercentageDiscountCalculator) Calculate([]Order) float64 {
+	return 0
+}
+
 type DiscountCalculator interface {
-	Calculate(int, []Order) float64
+	Calculate([]Order) float64
 }
