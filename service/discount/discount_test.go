@@ -101,3 +101,52 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 		})
 	}
 }
+
+func TestFreeProductDiscount_Calculate(t *testing.T) {
+	type fields struct {
+		ProductSkuID string
+	}
+	type args struct {
+		orders []order.Order
+	}
+	tests := []struct {
+		name     string
+		fields   fields
+		args     args
+		expected float64
+	}{
+		{
+			name: "should return discount amount equal to product price, when orders had the product discount",
+			fields: fields{
+				ProductSkuID: "SKU1234",
+			},
+			args: args{
+				orders: []order.Order{
+					{
+						Product: product.Product{
+							SkuID: "SKU1234",
+							Price: 109.50,
+						},
+						Quantity: 2,
+					},
+					{
+						Product: product.Product{
+							SkuID: "SKU4567",
+							Price: 88.50,
+						},
+						Quantity: 1,
+					},
+				},
+			},
+			expected: 109.50,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			f := FreeProductDiscount{
+				ProductSkuID: tt.fields.ProductSkuID,
+			}
+			assert.Equal(t, tt.expected, f.Calculate(tt.args.orders), tt.name)
+		})
+	}
+}

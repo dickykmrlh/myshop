@@ -33,6 +33,14 @@ func (p PercentageDiscount) Calculate(orders []order.Order) float64 {
 	return totalPrice * (p.DiscountPercentage / 100)
 }
 
+type FreeProductDiscount struct {
+	ProductSkuID string
+}
+
+func (f FreeProductDiscount) Calculate(orders []order.Order) float64 {
+	return 0
+}
+
 type Calculator interface {
 	Calculate([]order.Order) float64
 }
