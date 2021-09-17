@@ -72,6 +72,25 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 			},
 			expected: 32.85,
 		},
+		{
+			name: "should return 0 discount, when validation rule fail",
+			fields: fields{
+				DiscountPercentage: 10,
+				MinimumQuantity:    3,
+			},
+			args: args{
+				orders: []Order{
+					{
+						Product: Product{
+							SkuID: "SKU1234",
+							Price: 109.50,
+						},
+						Quantity: 2,
+					},
+				},
+			},
+			expected: 0,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
