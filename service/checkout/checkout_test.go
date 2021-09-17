@@ -45,4 +45,9 @@ func TestService_Run(t *testing.T) {
 		assert.Equal(t, "$5,429.99", actual)
 	})
 
+	t.Run("should checkout empty price if given 0 item", func(t *testing.T) {
+		actual := s.Run([]string{})
+		assert.Equal(t, "$0.00", actual)
+	})
+
 }
