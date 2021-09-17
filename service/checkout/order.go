@@ -24,6 +24,10 @@ func (o OrderLine) GetPrice() float64 {
 	return (o.product.Price * float64(o.quantity)) - discount
 }
 
+func (o OrderLine) Empty() bool {
+	return o.product.SkuID == ""
+}
+
 // Cart
 type Cart map[string]OrderLine
 
@@ -32,6 +36,21 @@ func NewCart() Cart {
 	return cart
 }
 
-func (cart Cart) AddOrder(order OrderLine) {
+func (cart Cart) AddOrder(newOrder OrderLine) {
+	currentOrder := cart[newOrder.product.SkuID]
+	if currentOrder.Empty() {
+		cart[newOrder.product.SkuID] = newOrder
+	}
 
+	currentOrder.quantity += 1
+	cart[currentOrder.product.SkuID] = currentOrder
+}
+
+func (cart Cart) GetTotalPrice() float64 {
+	var totalPrice float64
+	for _, orderLine := range cart {
+		totalPrice += orderLine.GetPrice()
+	}
+
+	return totalPrice
 }

@@ -1,6 +1,9 @@
 package checkout
 
-import repo "myshop/repository"
+import (
+	"fmt"
+	repo "myshop/repository"
+)
 
 var checkoutService *CheckoutService
 
@@ -23,15 +26,15 @@ func NewCheckoutService(inventory repo.InventoryRepository, promotion repo.Promo
 }
 
 func (s CheckoutService) Run(productNames []string) string {
-	/*
-		for _, name := range productNames {
-			item := s.inventory.GetByName(name)
-			product := NewProduct(item)
-			promotion := s.promotion.GetPromotion(product.SkuID)
-			orderLine := NewOrder(product)
-		}
-	*/
-	return ""
+	cart := NewCart()
+	for _, name := range productNames {
+		product := NewProduct(s.inventory.GetByName(name))
+		discountCalculator := NewDiscount(s.promotion.GetPromotion(product.SkuID))
+		orderLine := NewOrder(product, discountCalculator)
+		cart.AddOrder(orderLine)
+	}
+
+	return fmt.Sprintf("$%.2f", cart.GetTotalPrice())
 }
 
 type Server interface {

@@ -61,4 +61,20 @@ func TestCart_AddOrder(t *testing.T) {
 		})
 		assert.Equal(t, OrderLine{product: Product{SkuID: "12345", Price: 100}, quantity: 1}, cart["12345"])
 	})
+
+	t.Run("should added quantity when order of the same product", func(t *testing.T) {
+		cart.AddOrder(OrderLine{
+			product:  Product{SkuID: "12345", Price: 100},
+			quantity: 1,
+		})
+		assert.Equal(t, OrderLine{product: Product{SkuID: "12345", Price: 100}, quantity: 2}, cart["12345"])
+	})
+
+	t.Run("should added new order for another order of different product", func(t *testing.T) {
+		cart.AddOrder(OrderLine{
+			product:  Product{SkuID: "78901", Price: 50.0},
+			quantity: 1,
+		})
+		assert.Equal(t, OrderLine{product: Product{SkuID: "78901", Price: 50.0}, quantity: 1}, cart["78901"])
+	})
 }

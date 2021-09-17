@@ -44,6 +44,11 @@ func NewPromotionRepository(file string) (PromotionRepository, error) {
 }
 
 func (a *promotionManager) GetPromotion(skuID string) Promotion {
+	for _, promotion := range a.promotions {
+		if promotion.Sku == skuID {
+			return promotion
+		}
+	}
 	return Promotion{}
 }
 
