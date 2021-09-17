@@ -9,10 +9,10 @@ import (
 var promotionRepo *promotionManager
 
 type Promotion struct {
-	Sku                string `json:"sku"`
-	Type               string `json:"type"`
-	DiscountPercentage int    `json:"discount_percentage"`
-	Rule               Rule   `json:"rule"`
+	Sku                string  `json:"sku"`
+	Type               string  `json:"type"`
+	DiscountPercentage float64 `json:"discount_percentage"`
+	Rule               Rule    `json:"rule"`
 }
 
 type Rule struct {

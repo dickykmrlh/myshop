@@ -23,6 +23,14 @@ func NewCheckoutService(inventory repo.InventoryRepository, promotion repo.Promo
 }
 
 func (s CheckoutService) Run(productNames []string) string {
+	/*
+		for _, name := range productNames {
+			item := s.inventory.GetByName(name)
+			product := NewProduct(item)
+			promotion := s.promotion.GetPromotion(product.SkuID)
+			orderLine := NewOrder(product)
+		}
+	*/
 	return ""
 }
 

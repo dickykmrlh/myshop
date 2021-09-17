@@ -1,5 +1,23 @@
 package checkout
 
+import "myshop/repository"
+
+func NewDiscount(promotion repository.Promotion) Calculator {
+	switch promotion.Type {
+	case "free":
+		return FreeProductDiscount{
+			MinimumQuantity: promotion.Rule.MinimumQty,
+		}
+	case "percentage":
+		return PercentageDiscount{
+			DiscountPercentage: promotion.DiscountPercentage,
+			MinimumQuantity:    promotion.Rule.MinimumQty,
+		}
+	}
+
+	return nil
+}
+
 type PercentageDiscount struct {
 	DiscountPercentage float64
 	MinimumQuantity    int
