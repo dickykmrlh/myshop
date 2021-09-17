@@ -1,4 +1,4 @@
-package product
+package order
 
 type Product struct {
 	SkuID string

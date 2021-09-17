@@ -1,12 +1,10 @@
 package order
 
-import "myshop/service/product"
-
 type Order struct {
-	Product  product.Product
-	Quantity int
+	product  Product
+	quantity int
 }
 
 func (o Order) GetPrice() float64 {
-	return o.Product.Price * float64(o.Quantity)
+	return o.product.Price * float64(o.quantity)
 }
