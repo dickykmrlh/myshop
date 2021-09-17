@@ -43,8 +43,9 @@ func TestOrder_getPrice(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			o := Order{
-				product:  tt.fields.product,
-				quantity: tt.fields.quantity,
+				product:            tt.fields.product,
+				quantity:           tt.fields.quantity,
+				discountCalculator: tt.fields.discountCalculator,
 			}
 			assert.Equal(t, tt.expected, o.GetPrice(), tt.name)
 		})

@@ -7,5 +7,10 @@ type Order struct {
 }
 
 func (o Order) GetPrice() float64 {
-	return o.product.Price * float64(o.quantity)
+	var discount float64
+	if o.discountCalculator != nil {
+		discount = o.discountCalculator.Calculate(o.product.Price, o.quantity)
+	}
+
+	return (o.product.Price * float64(o.quantity)) - discount
 }
