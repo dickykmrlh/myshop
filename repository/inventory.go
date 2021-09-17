@@ -40,23 +40,16 @@ func NewInventoryRepository(file string) (InventoryRepository, error) {
 }
 
 func (p *inventoryManager) GetByName(productName string) Inventory {
-	for _, inventory := range p.inventories {
-		if inventory.Name == productName {
-			return inventory
+	for i := 0; i < len(p.inventories); i++ {
+		if p.inventories[i].Name == productName {
+			result := p.inventories[i]
+			p.inventories[i].Qty -= 1
+			return result
 		}
 	}
 	return Inventory{}
 }
 
-func (p *inventoryManager) UpdateQty(SkuID string, qty int) {
-	for i := 0; i < len(p.inventories); i++ {
-		if p.inventories[i].SkuID == SkuID {
-			p.inventories[i].Qty -= qty
-		}
-	}
-}
-
 type InventoryRepository interface {
 	GetByName(string) Inventory
-	UpdateQty(string, int)
 }

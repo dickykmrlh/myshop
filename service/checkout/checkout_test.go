@@ -33,6 +33,7 @@ func TestService_Run(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			actual := s.Run(tt.args.productNames)
 			assert.Equal(t, tt.expected, actual)
+			assert.Equal(t, 7, inventory.GetByName("Alexa Speaker").Qty, "should update the inventory")
 		})
 	}
 }
