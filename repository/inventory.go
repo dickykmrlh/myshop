@@ -19,7 +19,7 @@ type Inventory struct {
 	Qty   int     `json:"inventory_qty"`
 }
 
-func NewInventoryRepository() (inventoryRepository, error) {
+func NewInventoryRepository() (InventoryRepository, error) {
 	if inventoryRepo != nil {
 		return inventoryRepo, nil
 	}
@@ -56,7 +56,7 @@ func (p *inventoryManager) UpdateQty(SkuID string, qty int) {
 	}
 }
 
-type inventoryRepository interface {
+type InventoryRepository interface {
 	GetByName(string) Inventory
 	UpdateQty(string, int)
 }

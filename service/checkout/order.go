@@ -1,10 +1,5 @@
 package checkout
 
-type Product struct {
-	SkuID string
-	Price float64
-}
-
 type Order struct {
 	product            Product
 	quantity           int
@@ -18,4 +13,11 @@ func (o Order) GetPrice() float64 {
 	}
 
 	return (o.product.Price * float64(o.quantity)) - discount
+}
+
+type Cart struct {
+	Orders []Order
+}
+
+func (c *Cart) AddOrder(productName string) {
 }

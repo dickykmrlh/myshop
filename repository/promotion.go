@@ -23,7 +23,7 @@ type promotionManager struct {
 	promotions []Promotion
 }
 
-func NewPromotionRepository() (promotionRepository, error) {
+func NewPromotionRepository() (PromotionRepository, error) {
 	if promotionRepo != nil {
 		return promotionRepo, nil
 	}
@@ -47,6 +47,6 @@ func (a *promotionManager) GetPromotion(skuID string) Promotion {
 	return Promotion{}
 }
 
-type promotionRepository interface {
+type PromotionRepository interface {
 	GetPromotion(string) Promotion
 }
