@@ -1,5 +1,6 @@
 package checkout
 
+// Order
 type OrderLine struct {
 	product            Product
 	quantity           int
@@ -21,4 +22,16 @@ func (o OrderLine) GetPrice() float64 {
 	}
 
 	return (o.product.Price * float64(o.quantity)) - discount
+}
+
+// Cart
+type Cart map[string]OrderLine
+
+func NewCart() Cart {
+	cart := make(map[string]OrderLine)
+	return cart
+}
+
+func (cart Cart) AddOrder(order OrderLine) {
+
 }

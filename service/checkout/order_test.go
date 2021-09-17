@@ -51,3 +51,14 @@ func TestOrder_getPrice(t *testing.T) {
 		})
 	}
 }
+
+func TestCart_AddOrder(t *testing.T) {
+	cart := NewCart()
+	t.Run("should add new order, when no order created for that product", func(t *testing.T) {
+		cart.AddOrder(OrderLine{
+			product:  Product{SkuID: "12345", Price: 100},
+			quantity: 1,
+		})
+		assert.Equal(t, OrderLine{product: Product{SkuID: "12345", Price: 100}, quantity: 1}, cart["12345"])
+	})
+}
