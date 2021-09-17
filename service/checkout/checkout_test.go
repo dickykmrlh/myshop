@@ -13,27 +13,26 @@ func TestService_Run(t *testing.T) {
 
 	s := NewCheckoutService(inventory, promotion)
 
-	type args struct {
-		productNames []string
-	}
-	tests := []struct {
-		name     string
-		args     args
-		expected string
-	}{
-		{
-			name: "should checkout with correct total price return",
-			args: args{
-				productNames: []string{"Alexa Speaker", "Alexa Speaker", "Alexa Speaker"},
-			},
-			expected: "$295.65",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			actual := s.Run(tt.args.productNames)
-			assert.Equal(t, tt.expected, actual)
-			assert.Equal(t, 7, inventory.GetByName("Alexa Speaker").Qty, "should update the inventory")
-		})
-	}
+	t.Run("should checkout with correct total with price and percentage", func(t *testing.T) {
+		actual := s.Run([]string{"Alexa Speaker", "Alexa Speaker", "Alexa Speaker"})
+		assert.Equal(t, "$295.65", actual)
+		assert.Equal(t, 7, inventory.GetByName("Alexa Speaker").Qty, "should update the inventory")
+	})
+
+	t.Run("should checkout with correct total with price and free product discount", func(t *testing.T) {
+		actual := s.Run([]string{"Google Home", "Google Home", "Google Home"})
+		assert.Equal(t, "$99.98", actual)
+		assert.Equal(t, 7, inventory.GetByName("Google Home").Qty, "should update the inventory")
+	})
+
+	t.Run("should checkout with correct total with price and partially discount applied", func(t *testing.T) {
+		actual := s.Run([]string{"Google Home", "Google Home", "Alexa Speaker", "Alexa Speaker", "Alexa Speaker"})
+		assert.Equal(t, "$395.63", actual)
+	})
+
+	t.Run("should checkout with correct price with no discount applied", func(t *testing.T) {
+		actual := s.Run([]string{"Google Home", "Alexa Speaker", "Alexa Speaker"})
+		assert.Equal(t, "$268.99", actual)
+	})
+
 }
