@@ -96,6 +96,7 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			p := PercentageDiscountCalculator{
 				DiscountPercentage: tt.fields.DiscountPercentage,
+				MinimumQuantity:    tt.fields.MinimumQuantity,
 			}
 			assert.Equal(t, tt.expected, p.Calculate(tt.args.orders), tt.name)
 		})

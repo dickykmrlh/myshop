@@ -26,8 +26,15 @@ type PercentageDiscountCalculator struct {
 
 func (p PercentageDiscountCalculator) Calculate(orders []Order) float64 {
 	var totalPrice float64
+	var totalQuantity int
+
 	for _, order := range orders {
 		totalPrice += order.getPrice()
+		totalQuantity += order.Quantity
+	}
+
+	if totalQuantity < p.MinimumQuantity {
+		return 0
 	}
 
 	return totalPrice * (p.DiscountPercentage / 100)
