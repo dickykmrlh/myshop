@@ -20,12 +20,14 @@ func main() {
 	for scanner.Scan() {
 		args := strings.Split(scanner.Text(), " ")
 		var command Command
-		if args[0] == exitCmd {
-			command = NewExitCommand()
-		}
 
-		if args[0] == checkoutCmd {
+		switch args[0] {
+		case exitCmd:
+			command = NewExitCommand()
+			break
+		case checkoutCmd:
 			command = NewCheckoutCommand(args[1:], checkoutService)
+			break
 		}
 
 		if command == nil {
