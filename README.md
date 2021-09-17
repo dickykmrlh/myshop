@@ -41,3 +41,4 @@ exit the program
 Examples
 ------------
 
+![Alt Text](https://github.com/dickykmrlh/myshop/blob/main/docs/demo.gif)
