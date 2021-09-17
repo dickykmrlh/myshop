@@ -116,7 +116,7 @@ func TestFreeProductDiscount_Calculate(t *testing.T) {
 		expected float64
 	}{
 		{
-			name: "should return discount amount equal to product price, when orders had the product discount",
+			name: "should return discount amount equal to product price, when orders had the product discounted",
 			fields: fields{
 				ProductSkuID: "SKU1234",
 			},
@@ -139,6 +139,31 @@ func TestFreeProductDiscount_Calculate(t *testing.T) {
 				},
 			},
 			expected: 109.50,
+		},
+		{
+			name: "should return discount amount 0, when orders doesnt had product discounted",
+			fields: fields{
+				ProductSkuID: "SKU7890",
+			},
+			args: args{
+				orders: []order.Order{
+					{
+						Product: product.Product{
+							SkuID: "SKU1234",
+							Price: 109.50,
+						},
+						Quantity: 2,
+					},
+					{
+						Product: product.Product{
+							SkuID: "SKU4567",
+							Price: 88.50,
+						},
+						Quantity: 1,
+					},
+				},
+			},
+			expected: 0,
 		},
 	}
 	for _, tt := range tests {

@@ -38,6 +38,12 @@ type FreeProductDiscount struct {
 }
 
 func (f FreeProductDiscount) Calculate(orders []order.Order) float64 {
+	for _, order := range orders {
+		if order.Product.SkuID == f.ProductSkuID {
+			return order.Product.Price
+		}
+	}
+
 	return 0
 }
 
