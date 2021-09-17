@@ -1,1 +1,3 @@
-module "myshop"
+module myshop
+
+go 1.15
