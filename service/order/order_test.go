@@ -7,8 +7,9 @@ import (
 
 func TestOrder_getPrice(t *testing.T) {
 	type fields struct {
-		product  Product
-		quantity int
+		product            Product
+		quantity           int
+		discountCalculator Calculator
 	}
 	tests := []struct {
 		name     string
@@ -25,6 +26,18 @@ func TestOrder_getPrice(t *testing.T) {
 				quantity: 3,
 			},
 			expected: 90.00,
+		},
+		{
+			name: "Should return correct price with discount, when product had discount",
+			fields: fields{
+				product: Product{
+					SkuID: "SK1234",
+					Price: 30.00,
+				},
+				quantity:           3,
+				discountCalculator: FreeProductDiscount{MinimumQuantity: 2},
+			},
+			expected: 60.00,
 		},
 	}
 	for _, tt := range tests {

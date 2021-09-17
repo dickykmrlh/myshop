@@ -1,8 +1,9 @@
 package order
 
 type Order struct {
-	product  Product
-	quantity int
+	product            Product
+	quantity           int
+	discountCalculator Calculator
 }
 
 func (o Order) GetPrice() float64 {
