@@ -11,7 +11,7 @@ type Order struct {
 }
 
 func (o Order) getPrice() float64 {
-	return 0
+	return o.Product.Price * float64(o.Quantity)
 }
 
 type Cart struct {
