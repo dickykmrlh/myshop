@@ -1,43 +1,11 @@
-package checkout
+package discount
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/assert"
+	"myshop/service/order"
+	"myshop/service/product"
+	"testing"
 )
-
-func TestOrder_getPrice(t *testing.T) {
-	type fields struct {
-		Product  Product
-		Quantity int
-	}
-	tests := []struct {
-		name     string
-		fields   fields
-		expected float64
-	}{
-		{
-			name: "Should return correct price based on quantity bough",
-			fields: fields{
-				Product: Product{
-					SkuID: "SK1234",
-					Price: 30.00,
-				},
-				Quantity: 3,
-			},
-			expected: 90.00,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			o := Order{
-				Product:  tt.fields.Product,
-				Quantity: tt.fields.Quantity,
-			}
-			assert.Equal(t, tt.expected, o.getPrice(), tt.name)
-		})
-	}
-}
 
 func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 	type fields struct {
@@ -46,7 +14,7 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 		ProductSkuID       string
 	}
 	type args struct {
-		orders []Order
+		orders []order.Order
 	}
 	tests := []struct {
 		name     string
@@ -62,9 +30,9 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 				ProductSkuID:       "SKU1234",
 			},
 			args: args{
-				orders: []Order{
+				orders: []order.Order{
 					{
-						Product: Product{
+						Product: product.Product{
 							SkuID: "SKU1234",
 							Price: 109.50,
 						},
@@ -82,9 +50,9 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 				ProductSkuID:       "SKU1234",
 			},
 			args: args{
-				orders: []Order{
+				orders: []order.Order{
 					{
-						Product: Product{
+						Product: product.Product{
 							SkuID: "SKU1234",
 							Price: 109.50,
 						},
@@ -102,16 +70,16 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 				ProductSkuID:       "SKU1234",
 			},
 			args: args{
-				orders: []Order{
+				orders: []order.Order{
 					{
-						Product: Product{
+						Product: product.Product{
 							SkuID: "SKU1234",
 							Price: 109.50,
 						},
 						Quantity: 2,
 					},
 					{
-						Product: Product{
+						Product: product.Product{
 							SkuID: "SKU4567",
 							Price: 88.50,
 						},
@@ -124,7 +92,7 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			p := PercentageDiscountCalculator{
+			p := PercentageDiscount{
 				DiscountPercentage: tt.fields.DiscountPercentage,
 				MinimumQuantity:    tt.fields.MinimumQuantity,
 				ProductSkuID:       tt.fields.ProductSkuID,
