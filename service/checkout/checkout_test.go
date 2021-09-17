@@ -59,6 +59,7 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 			fields: fields{
 				DiscountPercentage: 10,
 				MinimumQuantity:    3,
+				ProductSkuID:       "SKU1234",
 			},
 			args: args{
 				orders: []Order{
@@ -78,6 +79,7 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 			fields: fields{
 				DiscountPercentage: 10,
 				MinimumQuantity:    3,
+				ProductSkuID:       "SKU1234",
 			},
 			args: args{
 				orders: []Order{

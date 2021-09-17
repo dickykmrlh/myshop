@@ -29,12 +29,21 @@ func (p PercentageDiscountCalculator) Calculate(orders []Order) float64 {
 	var totalPrice float64
 	var totalQuantity int
 
+	skuIDpass := false
 	for _, order := range orders {
 		totalPrice += order.getPrice()
 		totalQuantity += order.Quantity
+
+		if order.Product.SkuID == p.ProductSkuID {
+			skuIDpass = true
+		}
+
+		if totalQuantity < p.MinimumQuantity {
+			return 0
+		}
 	}
 
-	if totalQuantity < p.MinimumQuantity {
+	if !skuIDpass {
 		return 0
 	}
 
