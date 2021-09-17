@@ -38,7 +38,7 @@ func (s Service) Run(productNames []string) string {
 	}
 
 	formatter := message.NewPrinter(language.English)
-	return formatter.Sprintf("$%.2f", cart.GetTotalPrice())
+	return formatter.Sprintf("Total: $%.2f", cart.GetTotalPrice())
 }
 
 type Server interface {
