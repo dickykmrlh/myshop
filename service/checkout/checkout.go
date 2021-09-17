@@ -1,8 +1,10 @@
 package checkout
 
 import (
-	"fmt"
 	repo "myshop/repository"
+
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
 )
 
 var checkoutService *CheckoutService
@@ -34,7 +36,8 @@ func (s CheckoutService) Run(productNames []string) string {
 		cart.AddOrder(orderLine)
 	}
 
-	return fmt.Sprintf("$%.2f", cart.GetTotalPrice())
+	formatter := message.NewPrinter(language.English)
+	return formatter.Sprintf("$%.2f", cart.GetTotalPrice())
 }
 
 type Server interface {
