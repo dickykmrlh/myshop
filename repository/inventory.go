@@ -40,6 +40,11 @@ func NewProductRepository() (inventoryRepository, error) {
 }
 
 func (p *inventoryManager) GetByName(productName string) Inventory {
+	for _, inventory := range p.inventories {
+		if inventory.Name == productName {
+			return inventory
+		}
+	}
 	return Inventory{}
 }
 
