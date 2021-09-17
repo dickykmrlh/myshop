@@ -16,7 +16,8 @@ type Promotion struct {
 }
 
 type Rule struct {
-	MinimumQty int `json:"minimum_qty"`
+	MinimumQty int    `json:"minimum_qty"`
+	MustBuy    string `json:"must_buy"`
 }
 
 type promotionManager struct {

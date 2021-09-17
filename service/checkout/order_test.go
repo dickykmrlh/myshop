@@ -47,7 +47,7 @@ func TestOrder_getPrice(t *testing.T) {
 				quantity:           tt.fields.quantity,
 				discountCalculator: tt.fields.discountCalculator,
 			}
-			assert.Equal(t, tt.expected, o.GetPrice(), tt.name)
+			assert.Equal(t, tt.expected, o.GetPrice(nil), tt.name)
 		})
 	}
 }

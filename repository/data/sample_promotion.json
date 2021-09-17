@@ -2,7 +2,6 @@
   {
     "sku": "120P90",
     "type": "free",
-    "discount_percentage": 0,
     "rule": {
       "minimum_qty": 3
     }
@@ -13,6 +12,13 @@
     "discount_percentage": 10,
     "rule": {
       "minimum_qty": 3
+    }
+  },
+  {
+    "sku": "234234",
+    "type": "free",
+    "rule": {
+      "must_buy": "43N23P"
     }
   }
 ]

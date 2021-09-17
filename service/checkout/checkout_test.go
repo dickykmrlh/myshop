@@ -35,4 +35,14 @@ func TestService_Run(t *testing.T) {
 		assert.Equal(t, "$268.99", actual)
 	})
 
+	t.Run("should checkout with correct price and free item", func(t *testing.T) {
+		actual := s.Run([]string{"MacBook Pro", "Raspberry Pi B"})
+		assert.Equal(t, "$5399.99", actual)
+	})
+
+	t.Run("should checkout with correct price and free item for once item only", func(t *testing.T) {
+		actual := s.Run([]string{"Raspberry Pi B", "MacBook Pro", "Raspberry Pi B"})
+		assert.Equal(t, "$5429.99", actual)
+	})
+
 }

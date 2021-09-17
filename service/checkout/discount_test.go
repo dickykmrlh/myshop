@@ -52,7 +52,7 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 				DiscountPercentage: tt.fields.DiscountPercentage,
 				MinimumQuantity:    tt.fields.MinimumQuantity,
 			}
-			assert.Equal(t, tt.expected, p.Calculate(tt.args.price, tt.args.quantity), tt.name)
+			assert.Equal(t, tt.expected, p.Calculate(tt.args.price, tt.args.quantity, nil), tt.name)
 		})
 	}
 }
@@ -60,10 +60,12 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 func TestFreeProductDiscount_Calculate(t *testing.T) {
 	type fields struct {
 		MinimumQuantity int
+		MustBuy         string
 	}
 	type args struct {
-		price    float64
-		quantity int
+		price       float64
+		quantity    int
+		itemsBought []string
 	}
 	tests := []struct {
 		name     string
@@ -93,13 +95,40 @@ func TestFreeProductDiscount_Calculate(t *testing.T) {
 			},
 			expected: 0,
 		},
+		{
+			name: "should return discount amount 0, when must buy rule exist and did not pass",
+			fields: fields{
+				MinimumQuantity: 1,
+				MustBuy:         "SKU1234",
+			},
+			args: args{
+				price:       109.50,
+				quantity:    2,
+				itemsBought: []string{"SKU345", "SKU897"},
+			},
+			expected: 0,
+		},
+		{
+			name: "should return discount amount correctly, when must buy rule exist and we pass",
+			fields: fields{
+				MinimumQuantity: 1,
+				MustBuy:         "SKU1234",
+			},
+			args: args{
+				price:       109.50,
+				quantity:    2,
+				itemsBought: []string{"SKU345", "SKU897", "SKU1234"},
+			},
+			expected: 109.50,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			f := FreeProductDiscount{
 				MinimumQuantity: tt.fields.MinimumQuantity,
+				MustBuy:         tt.fields.MustBuy,
 			}
-			assert.Equal(t, tt.expected, f.Calculate(tt.args.price, tt.args.quantity), tt.name)
+			assert.Equal(t, tt.expected, f.Calculate(tt.args.price, tt.args.quantity, tt.args.itemsBought), tt.name)
 		})
 	}
 }

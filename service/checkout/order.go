@@ -15,10 +15,10 @@ func NewOrder(product Product, discountCalculator Calculator) OrderLine {
 	}
 }
 
-func (o OrderLine) GetPrice() float64 {
+func (o OrderLine) GetPrice(itemsBought []string) float64 {
 	var discount float64
 	if o.discountCalculator != nil {
-		discount = o.discountCalculator.Calculate(o.product.Price, o.quantity)
+		discount = o.discountCalculator.Calculate(o.product.Price, o.quantity, itemsBought)
 	}
 
 	return (o.product.Price * float64(o.quantity)) - discount
@@ -49,8 +49,17 @@ func (cart Cart) AddOrder(newOrder OrderLine) {
 func (cart Cart) GetTotalPrice() float64 {
 	var totalPrice float64
 	for _, orderLine := range cart {
-		totalPrice += orderLine.GetPrice()
+		totalPrice += orderLine.GetPrice(cart.getAllSku())
 	}
 
 	return totalPrice
+}
+
+func (cart Cart) getAllSku() []string {
+	var skuList []string
+	for sku, _ := range cart {
+		skuList = append(skuList, sku)
+	}
+
+	return skuList
 }
