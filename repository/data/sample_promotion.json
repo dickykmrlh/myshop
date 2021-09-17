@@ -1,0 +1,18 @@
+[
+  {
+    "sku": "120P90",
+    "type": "free",
+    "discount_percentage": 0,
+    "rule": {
+      "minimum_qty": 3
+    }
+  },
+  {
+    "sku": "A304SD",
+    "type": "percentage",
+    "discount_percentage": 10,
+    "rule": {
+      "minimum_qty": 3
+    }
+  }
+]

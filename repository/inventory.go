@@ -19,7 +19,7 @@ type Inventory struct {
 	Qty   int     `json:"inventory_qty"`
 }
 
-func NewProductRepository() (inventoryRepository, error) {
+func NewInventoryRepository() (inventoryRepository, error) {
 	if inventoryRepo != nil {
 		return inventoryRepo, nil
 	}
