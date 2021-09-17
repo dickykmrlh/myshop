@@ -70,7 +70,7 @@ func TestPercentageDiscountCalculator_Calculate(t *testing.T) {
 					},
 				},
 			},
-			expected: 295.65,
+			expected: 32.85,
 		},
 	}
 	for _, tt := range tests {
