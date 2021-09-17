@@ -22,6 +22,7 @@ type Cart struct {
 type PercentageDiscountCalculator struct {
 	DiscountPercentage float64
 	MinimumQuantity    int
+	ProductSkuID       string
 }
 
 func (p PercentageDiscountCalculator) Calculate(orders []Order) float64 {
