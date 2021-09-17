@@ -7,9 +7,9 @@ import (
 	"golang.org/x/text/message"
 )
 
-var checkoutService *CheckoutService
+var checkoutService *Service
 
-type CheckoutService struct {
+type Service struct {
 	inventory repo.InventoryRepository
 	promotion repo.PromotionRepository
 }
@@ -19,7 +19,7 @@ func NewCheckoutService(inventory repo.InventoryRepository, promotion repo.Promo
 		return checkoutService
 	}
 
-	checkoutService := &CheckoutService{
+	checkoutService := &Service{
 		inventory: inventory,
 		promotion: promotion,
 	}
@@ -27,7 +27,7 @@ func NewCheckoutService(inventory repo.InventoryRepository, promotion repo.Promo
 	return checkoutService
 }
 
-func (s CheckoutService) Run(productNames []string) string {
+func (s Service) Run(productNames []string) string {
 	cart := NewCart()
 	for _, name := range productNames {
 		product := NewProduct(s.inventory.GetByName(name))
