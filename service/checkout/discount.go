@@ -1,4 +1,4 @@
-package order
+package checkout
 
 type PercentageDiscount struct {
 	DiscountPercentage float64

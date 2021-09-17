@@ -1,4 +1,4 @@
-package order
+package checkout
 
 import (
 	"github.com/stretchr/testify/assert"

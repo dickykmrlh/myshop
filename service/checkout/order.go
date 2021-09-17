@@ -1,4 +1,4 @@
-package order
+package checkout
 
 type Order struct {
 	product            Product
