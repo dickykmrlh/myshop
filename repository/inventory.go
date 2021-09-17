@@ -48,6 +48,15 @@ func (p *inventoryManager) GetByName(productName string) Inventory {
 	return Inventory{}
 }
 
+func (p *inventoryManager) UpdateQty(SkuID string, qty int) {
+	for i := 0; i < len(p.inventories); i++ {
+		if p.inventories[i].SkuID == SkuID {
+			p.inventories[i].Qty -= qty
+		}
+	}
+}
+
 type inventoryRepository interface {
 	GetByName(string) Inventory
+	UpdateQty(string, int)
 }
