@@ -18,15 +18,21 @@ func main() {
 	checkoutService := setupServer()
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		if scanner.Text() == exitCmd {
-			break
-		}
 		args := strings.Split(scanner.Text(), " ")
-		if len(args) > 1 && args[0] == checkoutCmd {
-			fmt.Println(checkoutService.Run(args[1:]))
-		} else {
-			fmt.Println("no item added")
+		var command Command
+		if args[0] == exitCmd {
+			command = NewExitCommand()
 		}
+
+		if args[0] == checkoutCmd {
+			command = NewCheckoutCommand(args[1:], checkoutService)
+		}
+
+		if command == nil {
+			fmt.Println("unknown command")
+		}
+
+		command.Execute()
 	}
 }
 
@@ -47,4 +53,37 @@ func setupServer() checkout.Server {
 	}
 
 	return checkout.NewCheckoutService(inventory, promotion)
+}
+
+type exitCommand struct {
+}
+
+func NewExitCommand() Command {
+	return exitCommand{}
+}
+
+func (e exitCommand) Execute() {
+	os.Exit(0)
+}
+
+type CheckoutCommand struct {
+	items           []string
+	checkoutService checkout.Server
+}
+
+func NewCheckoutCommand(args []string, checkoutService checkout.Server) Command {
+	items := strings.Split(strings.Join(args, " "), ",")
+	return CheckoutCommand{
+		checkoutService: checkoutService,
+		items:           items,
+	}
+}
+
+func (c CheckoutCommand) Execute() {
+	result := c.checkoutService.Run(c.items)
+	fmt.Println(result)
+}
+
+type Command interface {
+	Execute()
 }

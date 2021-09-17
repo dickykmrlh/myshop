@@ -2,6 +2,7 @@ package checkout
 
 import (
 	repo "myshop/repository"
+	"strings"
 
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
@@ -30,7 +31,7 @@ func NewCheckoutService(inventory repo.InventoryRepository, promotion repo.Promo
 func (s Service) Run(productNames []string) string {
 	cart := NewCart()
 	for _, name := range productNames {
-		product := NewProduct(s.inventory.GetByName(name))
+		product := NewProduct(s.inventory.GetByName(strings.TrimSpace(name)))
 		discountCalculator := NewDiscount(s.promotion.GetPromotion(product.SkuID))
 		orderLine := NewOrder(product, discountCalculator)
 		cart.AddOrder(orderLine)
