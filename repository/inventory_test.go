@@ -8,7 +8,7 @@ import (
 
 func TestNewInventoryRepository(t *testing.T) {
 	t.Run("should not return error, and inventories is initialize", func(t *testing.T) {
-		inventoryRepo, err := NewInventoryRepository()
+		inventoryRepo, err := NewInventoryRepository("data/sample_inventory.json")
 		assert.Nil(t, err)
 		assert.NotNil(t, inventoryRepo)
 	})

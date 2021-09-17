@@ -8,8 +8,8 @@ import (
 )
 
 func TestService_Run(t *testing.T) {
-	inventory, _ := repository.NewInventoryRepository()
-	promotion, _ := repository.NewPromotionRepository()
+	inventory, _ := repository.NewInventoryRepository("../../repository/data/sample_inventory.json")
+	promotion, _ := repository.NewPromotionRepository("../../repository/data/sample_promotion.json")
 
 	s := NewCheckoutService(inventory, promotion)
 

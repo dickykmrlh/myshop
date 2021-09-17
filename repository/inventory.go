@@ -19,12 +19,12 @@ type Inventory struct {
 	Qty   int     `json:"inventory_qty"`
 }
 
-func NewInventoryRepository() (InventoryRepository, error) {
+func NewInventoryRepository(file string) (InventoryRepository, error) {
 	if inventoryRepo != nil {
 		return inventoryRepo, nil
 	}
 
-	fileContents, err := ioutil.ReadFile("data/sample_inventory.json")
+	fileContents, err := ioutil.ReadFile(file)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err

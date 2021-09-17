@@ -23,12 +23,12 @@ type promotionManager struct {
 	promotions []Promotion
 }
 
-func NewPromotionRepository() (PromotionRepository, error) {
+func NewPromotionRepository(file string) (PromotionRepository, error) {
 	if promotionRepo != nil {
 		return promotionRepo, nil
 	}
 
-	fileContents, err := ioutil.ReadFile("data/sample_promotion.json")
+	fileContents, err := ioutil.ReadFile(file)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
