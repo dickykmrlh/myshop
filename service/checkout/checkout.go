@@ -1,12 +1,31 @@
 package checkout
 
-import "myshop/repository"
+import repo "myshop/repository"
 
-type Service struct {
-	inventory repository.InventoryRepository
-	promotion repository.PromotionRepository
+var checkoutService *CheckoutService
+
+type CheckoutService struct {
+	inventory repo.InventoryRepository
+	promotion repo.PromotionRepository
 }
 
-func (s Service) Run(productNames string) string {
+func NewCheckoutService(inventory repo.InventoryRepository, promotion repo.PromotionRepository) Server {
+	if checkoutService != nil {
+		return checkoutService
+	}
+
+	checkoutService := &CheckoutService{
+		inventory: inventory,
+		promotion: promotion,
+	}
+
+	return checkoutService
+}
+
+func (s CheckoutService) Run(productNames []string) string {
 	return ""
+}
+
+type Server interface {
+	Run([]string) string
 }
